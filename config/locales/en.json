@@ -1,0 +1,13 @@
+{
+	"Authenticated successfully": "Authenticated successfully",
+	"Wrong username or password": "Wrong username or password",
+	"User not found.": "User not found.",
+	"Invalid password." : "Invalid password.",
+	"Registred successfully" : "Registred successfully",
+	"That email is already taken." : "That email is already taken.",
+	"Email sent succesfully": "Email sent succesfully",
+	"There was an error while sending the email": "There was an error while sending the email",
+	"User registred": "User registred",
+	"coud'nt register the user": "coud'nt register the user",
+	"Authunticated successfully": "Authunticated successfully"
+}

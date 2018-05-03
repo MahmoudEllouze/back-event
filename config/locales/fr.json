@@ -1,0 +1,13 @@
+{
+	"Authenticated successfully": "Authentification reusite",
+	"Wrong username or password": "Utilisateur ou mot de passe incorrect",
+	"User not found.": "Utilisateur introuvable",
+	"Invalid password.": "Mot de pase invalide",
+	"Registred successfully" : "Inscription reussie",
+	"That email is already taken." : "Cet email est deja utilisé",
+	"Email sent succesfully": "Email envoyé avec succes",
+	"There was an error while sending the email": "Une erreure s'est produite lors de l'envoi du mail",
+	"coud'nt register the user": "Impossible de créer l'utilisateur",
+	"User registred": "Utilisateur enregistré",
+	"Registration successfully": "Registration successfully"
+}
