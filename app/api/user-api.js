@@ -1,5 +1,5 @@
 var express = require('express');
-var User = require('./models/user.js');
+var User = require('./../models/user.js');
 
 module.exports = function(app, isLoggedIn){
 	app.get('/profile', isLoggedIn, function(req, res) {
@@ -11,9 +11,7 @@ module.exports = function(app, isLoggedIn){
 	});
 	app.put('/profile', isLoggedIn, function(req, res) {
 		console.log(req.user.id);
-		// res.status(200).json({
-		// 	user : req.user
-		// });
+		
 		User.findById(req.user.id, function(err, user){
 			if (err) res.send(err);
 			user.data.firstname = req.body.firstname;
@@ -21,7 +19,7 @@ module.exports = function(app, isLoggedIn){
 			user.data.cin = req.body.cin;
 			user.save(function(err){
 				if (err) console.log(err);
-				res.status(200).json({message : "user updated"})
+				res.status(200).json({message : "User updated"})
 
 			})
 			

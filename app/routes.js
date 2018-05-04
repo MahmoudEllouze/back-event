@@ -1,6 +1,8 @@
 // app/routes.js
 var i18n = require('./../config/i18n.js');
 var express = require('express');
+var mailer = require('./../config/services.js');
+
 module.exports = function(app, passport) {
 
 	// =====================================
@@ -52,7 +54,8 @@ module.exports = function(app, passport) {
 		return res.status(200).json({message : "bien"})
 	});
 	// var router =  express.Router();
-	require('./user-api.js')(app, isLoggedIn)
+	require('./api/user-api.js')(app, isLoggedIn)
+	require('./api/organisation-api.js')(app, isLoggedIn)
 	// app.use('/api', router);
 	
 };
