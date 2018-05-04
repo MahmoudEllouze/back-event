@@ -1,14 +1,15 @@
 
 var mongoose = require('mongoose');
-
+var ObjectId = mongoose.Schema.Types.ObjectId;
 // define the schema for our user model
 var organisationSchema = mongoose.Schema({
 
-    data : {
-        name : String,
-        email : String,
-        matriculation : String
-    }
+
+	name : String,
+	email : String,
+	matriculation : String,
+	creator : ObjectId
+
 
 });
 

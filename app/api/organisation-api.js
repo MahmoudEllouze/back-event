@@ -4,7 +4,7 @@ var Organisation = require('./../models/organisation.js');
 module.exports = function(app, isLoggedIn){
 	app.get('/organisations', isLoggedIn, function(req, res) {
 
-		Organisation.find({},'id, data.name', function(err, organisation){
+		Organisation.find({},'id, name', function(err, organisation){
 			if (err) console.log(err);
 
 			if (organisation==null){
@@ -19,9 +19,10 @@ module.exports = function(app, isLoggedIn){
 		var newOrg = new Organisation();
 
                 // set the user's local credentials
-                newOrg.data.name    = req.body.name;
-                newOrg.data.email = req.body.email;
-                newOrg.data.matriculation = req.body.matriculation;
+                newOrg.name    = req.body.name;
+                newOrg.email = req.body.email;
+                newOrg.matriculation = req.body.matriculation;
+                newOrg.creator = req.user.id;
 
 
                 newOrg.save(function(err) {
@@ -49,9 +50,9 @@ module.exports = function(app, isLoggedIn){
 		
 		Organisation.findById(req.params.id_org, function(err, organisation){
 			if (err) res.send(err);
-			organisation.data.name = req.body.name;
-			organisation.data.email = req.body.email;
-			organisation.data.matriculation = req.body.matriculation;
+			organisation.name = req.body.name;
+			organisation.email = req.body.email;
+			organisation.matriculation = req.body.matriculation;
 			organisation.save(function(err){
 				if (err) console.log(err);
 				res.status(200).json({message : "Organisation updated"})

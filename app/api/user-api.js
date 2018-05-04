@@ -14,9 +14,9 @@ module.exports = function(app, isLoggedIn){
 		
 		User.findById(req.user.id, function(err, user){
 			if (err) res.send(err);
-			user.data.firstname = req.body.firstname;
-			user.data.lastname = req.body.lastname;
-			user.data.cin = req.body.cin;
+			user.firstname = req.body.firstname;
+			user.lastname = req.body.lastname;
+			user.cin = req.body.cin;
 			user.save(function(err){
 				if (err) console.log(err);
 				res.status(200).json({message : "User updated"})

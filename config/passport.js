@@ -43,33 +43,43 @@ module.exports = function(passport) {
         console.log(req.body)
 		// find a user whose email is the same as the forms email
 		// we are checking to see if the user trying to login already exists
-        User.findOne({ 'local.email' :  email}, function(err, user) {
+        User.findOne({ 'email' :  email}, function(err, user) {
             // if there are any errors, return the error
             if (err)
                 return done(err);
 
             // check to see if theres already a user with that email
             if (user) {
-                return done(null, false, 'That email is already taken.');
+                return done(null, false, [{name: 'email' , error: 'That email is already taken.'}]);
             } else {
 
 				// if there is no user with that email
                 // create the user
-                var newUser            = new User();
+                var newUser  = new User();
 
                 // set the user's local credentials
-                newUser.local.email    = email;
-                newUser.local.password = newUser.generateHash(password);
-                newUser.data.firstname = req.body.firstname;
-                newUser.data.lastname = req.body.lastname;
-                newUser.data.cin = req.body.cin;
+                newUser.email    = email;
+                newUser.password = newUser.generateHash(password);
+                newUser.firstname = req.body.firstname;
+                newUser.lastname = req.body.lastname;
+                newUser.cin = req.body.cin;
 
                  // use the generateHash function in our user model
 
 				// save the user
                 newUser.save(function(err) {
-                    if (err)
-                        throw err;
+                    if (err) {
+                        var errors =[]
+                        if (err.code == 11000) {
+                            errors.push({name: 'cin', error: 'cin must be unique'})
+                        }
+                        for (var errName in err.errors) {
+
+                            errors.push({name: errName, error: err.errors[errName].message})
+                            
+                        }
+                        return done(null, false, errors);
+                    }
                     return done(null, newUser);
                 });
             }
@@ -93,7 +103,7 @@ module.exports = function(passport) {
     function(req, email, password, done) { // callback with email and password from our form
         // find a user whose email is the same as the forms email
         // we are checking to see if the user trying to login already exists
-        User.findOne({ 'local.email' :  email }, function(err, user) {
+        User.findOne({ 'email' :  email }, function(err, user) {
             // if there are any errors, return the error before anything else
             if (err)
                 return done(err);

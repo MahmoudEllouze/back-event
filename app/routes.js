@@ -26,12 +26,17 @@ module.exports = function(app, passport) {
 
 	// process the signup form
 	app.post('/signup', function(req, res, next) {
+
 		passport.authenticate('local-signup', function(err, user, info) {
 			i18n.setLocale(req.headers['accept-language']);
-			if (err) { return next(err); }
+
+			if (err) { 
+				return res.status(500).json({message : i18n.__(info)}) }
+
 			if (!user) { 
-				return res.status(401).json({message : i18n.__(info)}) 
+				return res.status(401).json(info) 
 			}
+
 			req.logIn(user, function(err) {
 				if (err) { return next(err); }
 				return res.status(200).json({message : i18n.__("Registred successfully")});
@@ -45,7 +50,7 @@ module.exports = function(app, passport) {
 
 	app.get('/logout', function(req, res) {
 		req.logout();
-		res.redirect('/');
+		return res.status(200).json({message : "logout successful"});
 	});
 
 	app.get('/test', isLoggedIn, function(req, res) {
