@@ -13,20 +13,71 @@ var userSchema = mongoose.Schema({
     password : {
         type : String
     },
-
     firstname : {
         type : String,
         required: [true, 'Firstname is required']
     },
-
     lastname : {
         type : String,
         required: [true, 'Lastname is required']
     },
-
     cin : {
         type : String,
         unique : true
+    },
+    active : {
+        type : Boolean
+    },
+    birthdate : {
+        type : Date
+    },
+    coordinate : {
+        town : {
+            type : String
+        },
+        country : {
+            type : String
+        },
+        phoneNumber : {
+            type : Number
+        }
+    },
+    socialMedia : {
+        facebook : {
+            type : String
+        },
+        skype : {
+            type : String
+        },
+        twitter : {
+            type : String
+        }
+    },
+    sport : {
+        club : {
+            type : String
+        },
+        licence : {
+            type : String
+        },
+        professionnal : {
+            type : Boolean
+        },
+        height : {
+            type : Number
+        },
+        weight : {
+            type : Number
+        },
+        gender : {
+            type : String
+        }
+    },
+    profilePhoto : {
+        type : String
+    },
+    motivation : {
+        type : String
     }
 
 });

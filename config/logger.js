@@ -19,7 +19,8 @@ const logger = new (winston.Logger)({
     new (winston.transports.File)({
       filename: `${logDir}/results.log`,
       timestamp: fileFormat,
-      level: env === 'development' ? 'debug' : 'info'
+      level: 'info'
+      //level: env === 'development' ? 'debug' : 'info'
     })
   ]
 });

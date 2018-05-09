@@ -3,11 +3,18 @@
 	"Wrong username or password": "Utilisateur ou mot de passe incorrect",
 	"User not found.": "Utilisateur introuvable",
 	"Invalid password.": "Mot de pase invalide",
-	"Registred successfully" : "Inscription reussie",
-	"That email is already taken." : "Cet email est deja utilisé",
+	"Registred successfully": "Inscription reussie",
+	"That email is already taken.": "Cet email est deja utilisé",
 	"Email sent succesfully": "Email envoyé avec succes",
 	"There was an error while sending the email": "Une erreure s'est produite lors de l'envoi du mail",
 	"coud'nt register the user": "Impossible de créer l'utilisateur",
 	"User registred": "Utilisateur enregistré",
-	"Registration successfully": "Registration successfully"
+	"Registration successfully": "Registration successfully",
+	"Organisation not found": "L'organisation n'a pas été retrouvée",
+	"User updated": "User updated",
+	"Firstname is required" : "Le prénom est requis",
+	"Lastname is required" : "Le nom est requis",
+	"Logout successful" : "Deconnexion reussie",
+	"Organisation updated" : "Organisation mise a jour",
+	"User updated" : "Utilisateur mis a jour"
 }

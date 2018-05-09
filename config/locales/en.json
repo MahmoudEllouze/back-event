@@ -11,5 +11,10 @@
 	"coud'nt register the user": "coud'nt register the user",
 	"Authunticated successfully": "Authunticated successfully",
 	"err.errors[errName].message": "err.errors[errName].message",
-	"User name is required": "User name is required"
+	"User name is required": "User name is required",
+	"Organisation not found": "Organisation not found",
+	"User updated": "User updated",
+	"Firstname is required": "Firstname is required",
+	"Organisation updated": "Organisation updated",
+	"Logout successful": "Logout successful"
 }

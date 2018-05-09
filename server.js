@@ -11,7 +11,7 @@ var flash    = require('connect-flash');
 var cors = require('cors');
 
 require('dotenv').config();
-
+console.log('gkfjqhgkh ohergg')
 
 var mongoAdress = 'mongodb://'+process.env.DB_HOST+':'+process.env.DB_PORT+"/"+process.env.DB_NAME
 mongoose.connect(mongoAdress);
@@ -32,7 +32,7 @@ app.configure(function() {
 	app.use(express.session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
 	app.use(passport.initialize());
 	app.use(passport.session()); // persistent login sessions
-	app.use(flash()); // use connect-flash for flash messages stored in session
+	//app.use(flash()); // use connect-flash for flash messages stored in session
 	app.use(cors());
 });
 
@@ -41,4 +41,4 @@ require('./app/routes.js')(app, passport); // load our routes and pass in our ap
 
 // launch ======================================================================
 app.listen(process.env.SERVER_PORT);
-console.log('The magic happens on port ' + process.env.SERVER_PORT);
+console.log('The magic happens on port ert ' + process.env.SERVER_PORT);

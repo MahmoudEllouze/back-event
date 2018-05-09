@@ -2,7 +2,9 @@
 var i18n = require('./../config/i18n.js');
 var express = require('express');
 var mailer = require('./../config/services.js');
-
+var secret = '12312';
+var jwt = require('jsonwebtoken');
+var logger = require('./../config/logger.js');
 module.exports = function(app, passport) {
 
 	// =====================================
@@ -18,7 +20,9 @@ module.exports = function(app, passport) {
 			}
 			req.logIn(user, function(err) {
 				if (err) { return next(err); }
-				return res.status(200).json({message : i18n.__("Authenticated successfully")});
+				var token = jwt.sign({id : user._id}, secret, {expiresIn : 5*360});
+				logger.info("The user "+ user.firstname + " has logged in");
+				return res.status(200).json({message : i18n.__("Authenticated successfully"), token: token});
 			});
 		})(req, res, next);
 	});
@@ -49,15 +53,12 @@ module.exports = function(app, passport) {
 
 
 	app.get('/logout', function(req, res) {
+		i18n.setLocale(req.headers['accept-language']);
 		req.logout();
-		return res.status(200).json({message : "logout successful"});
+		return res.status(200).json({message : i18n.__("Logout successful")});
 	});
 
-	app.get('/test', isLoggedIn, function(req, res) {
-		i18n.setLocale('fr');
-		console.log(i18n.__("coud'nt register the user"));
-		return res.status(200).json({message : "bien"})
-	});
+	
 	// var router =  express.Router();
 	require('./api/user-api.js')(app, isLoggedIn)
 	require('./api/organisation-api.js')(app, isLoggedIn)
@@ -67,10 +68,25 @@ module.exports = function(app, passport) {
 
 // route middleware to make sure
 function isLoggedIn(req, res, next) {
-	// if user is authenticated in the session, carry on
-	if (req.isAuthenticated())
-		return next();
 
-	// if they aren't redirect them to the home page
-	res.status(401).json({message : "unauthaurized"});
+	var token = req.headers['authorization'];
+
+    if (token) {
+        token = token.replace('Bearer ', '')
+    }
+	// if user is authenticated in the session, carry on
+	jwt.verify(token, secret, function(err, decoded) {
+        if (err) {
+            return res.status(401).json({ success: false, message: 'Failed to authenticate token.' });
+        } else {
+
+            req.decoded = jwt.decode(token);
+            return next();
+        }
+    });
+	// if (req.isAuthenticated())
+	// 	return next();
+
+	// // if they aren't redirect them to the home page
+	// res.status(401).json({message : "Unauthaurized"});
 }

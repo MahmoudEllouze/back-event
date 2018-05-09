@@ -2,36 +2,23 @@
 
 // load all the things we need
 var LocalStrategy   = require('passport-local').Strategy;
-// var i18n = require('./i18n.js');
+var i18n = require('./i18n.js');
 // load up the user model
 var User       		= require('../app/models/user');
 var logger = require('./logger.js');
 // expose this function to our app using module.exports
 module.exports = function(passport) {
 
-	// =========================================================================
-    // passport session setup ==================================================
-    // =========================================================================
-    // required for persistent login sessions
-    // passport needs ability to serialize and unserialize users out of session
 
-    // used to serialize the user for the session
     passport.serializeUser(function(user, done) {
         done(null, user.id);
     });
 
-    // used to deserialize the user
     passport.deserializeUser(function(id, done) {
         User.findById(id, function(err, user) {
             done(err, user);
         });
     });
-
- 	// =========================================================================
-    // LOCAL SIGNUP ============================================================
-    // =========================================================================
-    // we are using named strategies since we have one for login and one for signup
-	// by default, if there was no name, it would just be called 'local'
 
     passport.use('local-signup', new LocalStrategy({
         // by default, local strategy uses username and password, we will override with email
@@ -40,9 +27,8 @@ module.exports = function(passport) {
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
     function(req, email, password, done) {
-        console.log(req.body)
-		// find a user whose email is the same as the forms email
-		// we are checking to see if the user trying to login already exists
+        i18n.setLocale(req.headers['accept-language']);
+
         User.findOne({ 'email' :  email}, function(err, user) {
             // if there are any errors, return the error
             if (err)
@@ -63,6 +49,7 @@ module.exports = function(passport) {
                 newUser.firstname = req.body.firstname;
                 newUser.lastname = req.body.lastname;
                 newUser.cin = req.body.cin;
+                newUser.profilePhoto = req.body.profilePhoto;
 
                  // use the generateHash function in our user model
 
@@ -74,8 +61,7 @@ module.exports = function(passport) {
                             errors.push({name: 'cin', error: 'cin must be unique'})
                         }
                         for (var errName in err.errors) {
-
-                            errors.push({name: errName, error: err.errors[errName].message})
+                            errors.push({name: errName, error: i18n.__(err.errors[errName].message)})
                             
                         }
                         return done(null, false, errors);
@@ -88,11 +74,6 @@ module.exports = function(passport) {
 
     }));
 
-    // =========================================================================
-    // LOCAL LOGIN =============================================================
-    // =========================================================================
-    // we are using named strategies since we have one for login and one for signup
-    // by default, if there was no name, it would just be called 'local'
 
     passport.use('local-login', new LocalStrategy({
         // by default, local strategy uses username and password, we will override with email
@@ -101,8 +82,8 @@ module.exports = function(passport) {
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
     function(req, email, password, done) { // callback with email and password from our form
-        // find a user whose email is the same as the forms email
-        // we are checking to see if the user trying to login already exists
+        console.log('email');
+        console.log(password);
         User.findOne({ 'email' :  email }, function(err, user) {
             // if there are any errors, return the error before anything else
             if (err)

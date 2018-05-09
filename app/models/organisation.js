@@ -5,12 +5,51 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 var organisationSchema = mongoose.Schema({
 
 
-	name : String,
-	email : String,
-	matriculation : String,
+	companyName : {
+        type : String
+    },
+    description : {
+        type : String
+    },
+    email : {
+        type : String
+    },
+    tradeRegister : {
+        type : String
+    },
+    patent : {
+        type : String
+    },
+    foundationDate : {
+        type : Date
+    },
+    logo : {
+        type : String
+    },
+    legalRepresentant : {
+        type : String
+    },
+    coordinate : {
+        country : {
+        	type : String
+        },
+        adress : {
+        	type : String
+        },
+        town : {
+        	type : String
+        },
+        postalCode : {
+        	type : String
+        },
+        phoneNumber : {
+        	type : String
+        }
+    },
+    active : {
+        type : Boolean 
+    },
 	creator : ObjectId
-
-
 });
 
 
