@@ -33,7 +33,10 @@ module.exports = function(passport) {
             // if there are any errors, return the error
             if (err)
                 return done(err);
-
+            if (password.length < 6) {
+                errors.push({name: 'password', error: 'password must have at least 6 caracters'})
+                return done(null, false, errors);
+            }
             // check to see if theres already a user with that email
             if (user) {
                 return done(null, false, [{name: 'email' , error: 'That email is already taken.'}]);
@@ -50,7 +53,7 @@ module.exports = function(passport) {
                 newUser.lastname = req.body.lastname;
                 newUser.cin = req.body.cin;
                 newUser.profilePhoto = req.body.profilePhoto;
-
+                newUser.roles = ['admin']
                  // use the generateHash function in our user model
 
 				// save the user
@@ -82,8 +85,7 @@ module.exports = function(passport) {
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
     function(req, email, password, done) { // callback with email and password from our form
-        console.log('email');
-        console.log(password);
+
         User.findOne({ 'email' :  email }, function(err, user) {
             // if there are any errors, return the error before anything else
             if (err)

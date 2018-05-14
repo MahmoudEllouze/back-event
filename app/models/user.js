@@ -2,6 +2,8 @@
 // load the things we need
 var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
+var rbac = require('mongoose-rbac');
+var rbac = require('simple-mongoose-rbac');
 
 // define the schema for our user model
 var userSchema = mongoose.Schema({
@@ -81,7 +83,20 @@ var userSchema = mongoose.Schema({
     }
 
 });
+rbac.init({
+    grants: {
+        'user': {
+            'comment': ['add'],
+        },
+        'admin': {
+            'comment': ['delete'],
+        },
+    },
+    callback: function (user, ope, res) {
 
+    },
+    schema: userSchema, 
+});
 // methods ======================
 // generating a hash
 userSchema.methods.generateHash = function(password) {

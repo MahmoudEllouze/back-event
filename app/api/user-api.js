@@ -2,6 +2,7 @@ var express = require('express');
 var User = require('./../models/user.js');
 var jwt = require('jsonwebtoken');
 var i18n = require('./../../config/i18n.js');
+var logger = require('./../../config/logger.js');
 
 module.exports = function(app, isLoggedIn){
 	
@@ -39,7 +40,8 @@ module.exports = function(app, isLoggedIn){
 			user.sport.gender = req.body.gender;
 			user.save(function(err){
 				if (err) console.log(err);
-				res.status(200).json({message : i18n.__("User updated")})
+				logger.info("The user "+ user.firstname + " has been updated. Session : " + req.decoded.id);
+				res.status(200).json({message : i18n.__("User updated")});
 
 			})
 

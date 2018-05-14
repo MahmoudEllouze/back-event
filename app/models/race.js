@@ -1,56 +1,51 @@
-
 var mongoose = require('mongoose');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 // define the schema for our user model
-var organisationSchema = mongoose.Schema({
+var raceSchema = mongoose.Schema({
 
 
-	companyName : {
+	editionId : {
+        type : ObjectId
+    },
+    type : {
         type : String
     },
-    description : {
+    libeleRace : {
         type : String
     },
-    email : {
+    distance : {
+        type : Number
+    },
+    presentation : {
         type : String
     },
-    tradeRegister : {
+    libele : {
         type : String
     },
-    patent : {
-        type : String
-    },
-    foundationDate : {
+    dateRace : {
         type : Date
     },
-    logo : {
+    hourRace : {
+        type : Date
+    },
+    active : {
         type : String
     },
-    legalRepresentant : {
-        type : String
-    },
-    coordinate : {
-        country : {
+    socialMedia : {
+        website : {
         	type : String
         },
-        adress : {
+        facebook : {
         	type : String
         },
-        town : {
-        	type : String
-        },
-        postalCode : {
-        	type : String
-        },
-        phoneNumber : {
+        tweeter : {
         	type : String
         }
     },
-    active : {
-        type : Boolean 
+    creatorId : {
+        type : ObjectId
     },
-	creator : ObjectId,
     creationDate : {
         type : Date
     },
@@ -61,4 +56,4 @@ var organisationSchema = mongoose.Schema({
 
 
 // create the model for users and expose it to our app
-module.exports = mongoose.model('Organisation', organisationSchema);
+module.exports = mongoose.model('Race', raceSchema);

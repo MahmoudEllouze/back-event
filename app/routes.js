@@ -5,12 +5,12 @@ var mailer = require('./../config/services.js');
 var secret = '12312';
 var jwt = require('jsonwebtoken');
 var logger = require('./../config/logger.js');
+var rbac = require('./../config/rbac.js');
 module.exports = function(app, passport) {
 
 	// =====================================
 	// HOME PAGE (with login links) ========
 	// =====================================
-
 	app.post('/login', function(req, res, next) {
 		passport.authenticate('local-login', function(err, user, info) {
 			i18n.setLocale(req.headers['accept-language']);
@@ -21,7 +21,7 @@ module.exports = function(app, passport) {
 			req.logIn(user, function(err) {
 				if (err) { return next(err); }
 				var token = jwt.sign({id : user._id}, secret, {expiresIn : 5*360});
-				logger.info("The user "+ user.firstname + " has logged in");
+				logger.info("The user "+ user.firstname + " has logged in. Session : " + user._id);
 				return res.status(200).json({message : i18n.__("Authenticated successfully"), token: token});
 			});
 		})(req, res, next);
@@ -57,11 +57,27 @@ module.exports = function(app, passport) {
 		req.logout();
 		return res.status(200).json({message : i18n.__("Logout successful")});
 	});
+	app.get('/hero', function(req, res) {
+		return res.status(200).json([
+      { id: 11, name: 'Mr. Mahmoud' },
+      { id: 12, name: 'Narco' },
+      { id: 13, name: 'Bombasto' },
+      { id: 14, name: 'Celeritas' },
+      { id: 15, name: 'Magneta' },
+      { id: 16, name: 'RubberMan' },
+      { id: 17, name: 'Dynama' },
+      { id: 18, name: 'Dr IQ' },
+      { id: 19, name: 'Magma' },
+      { id: 20, name: 'Tornado' }]);
+	});
 
 	
 	// var router =  express.Router();
 	require('./api/user-api.js')(app, isLoggedIn)
 	require('./api/organisation-api.js')(app, isLoggedIn)
+	require('./api/competition-api.js')(app, isLoggedIn)
+	require('./api/edition-api.js')(app, isLoggedIn)
+	require('./api/race-api.js')(app, isLoggedIn)
 	// app.use('/api', router);
 	
 };
